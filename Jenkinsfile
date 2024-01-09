@@ -49,11 +49,11 @@ pipeline{
                 script{
                     withCredentials([string(credentialsId: 'nexus_password', variable: 'nexus_creds')]) {
                         sh '''
-                            docker build -t 54.162.126.124:8083/petshop:${VERSION} .
-                            echo "Account01@" | docker login -u admin --password-stdin 54.162.126.124:8083
-                            #docker login -u admin -p $nexus_creds 54.162.126.124:8083
-                            docker push 54.162.126.124:8083/petshop:${VERSION}
-                            docker rmi 54.162.126.124:8083/petshop:${VERSION}
+                            docker build -t 54.145.108.140:8083/petshop:${VERSION} .
+                            echo "Account01@" | docker login -u admin --password-stdin 54.145.108.140:8083
+                            #docker login -u admin -p $nexus_creds 54.145.108.140:8083
+                            docker push 54.145.108.140:8083/petshop:${VERSION}
+                            docker rmi 54.145.108.140:8083/petshop:${VERSION}
                         '''
                     }
                 }                     
@@ -72,9 +72,9 @@ pipeline{
                 script{
                     withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) { 
                         sh '''
-                            echo "Account01@" | docker login -u admin --password-stdin 54.162.126.124:8083  
-                            // docker pull 54.162.126.124:8083/petshop:31                 
-                            docker run -d --name pet1 -p 8081:8080 54.162.126.124:8083/petshop:${VERSION}
+                            echo "Account01@" | docker login -u admin --password-stdin 54.145.108.140:8083  
+                            // docker pull 54.145.108.140:8083/petshop:31                 
+                            docker run -d --name pet1 -p 8081:8080 54.145.108.140:8083/petshop:${VERSION}
                         '''
                     }  
                 }
