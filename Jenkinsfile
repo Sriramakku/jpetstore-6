@@ -3,6 +3,10 @@ pipeline{
     environment {
         // SCANNER_HOME=tool 'sonar-scanner'
         VERSION = "${env.BUILD_ID}"
+        AWS_ACCESS_KEY_ID     = credentials('awsaccesskey')
+        AWS_SECRET_ACCESS_KEY = credentials('awssecretaccesskey')
+        AWS_DEFAULT_REGION    = 'us-east-1'
+
     }
     tools {
         maven 'maven3'
@@ -46,8 +50,8 @@ pipeline{
                     withCredentials([string(credentialsId: 'nexus_password', variable: 'nexus_creds')]) {
                         sh '''
                             docker build -t 54.81.72.120:8083/petshop:${VERSION} .
-                            echo "Account01@" | docker login -u admin --password-stdin 54.81.72.120:8083
-                            #docker login -u admin -p $nexus_creds 54.81.72.120:8083
+                            #echo "Account01@" | docker login -u admin --password-stdin 54.81.72.120:8083
+                            docker login -u admin -p $nexus_creds 54.81.72.120:8083
                             docker push 54.81.72.120:8083/petshop:${VERSION}
                             docker rmi 54.81.72.120:8083/petshop:${VERSION}
                         '''
@@ -55,5 +59,13 @@ pipeline{
                 }                     
             }  
         } 
+        stage('Terraform EC2 provision ') {
+            steps {
+                sh 'terraform init'
+                sh 'terraform plan -out tfplan'
+                sh 'terraform show -no-color tfplan > tfplan.txt'
+                sh 'terraform apply -input=false tfplan'
+            }
+        }
    }
 }
