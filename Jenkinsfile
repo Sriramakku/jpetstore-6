@@ -67,28 +67,27 @@ pipeline{
                 sh 'terraform apply -input=false tfplan'
             }
         }
-        stage("docker run "){                      
-            steps{                
-                script{
-                    withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) { 
-                        sh '''
-                            echo "Account01@" | docker login -u admin --password-stdin 54.145.108.140:8083                                              
-                            docker run -d --name pet1 -p 8081:8080 54.145.108.140:8083/petshop:${VERSION}
-                        '''
-                    }  
-                }
-            }                     
-        }  
+        // stage("docker run "){                      
+        //     steps{                
+        //         script{
+        //             withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) { 
+        //                 sh '''
+        //                     echo "Account01@" | docker login -u admin --password-stdin 54.145.108.140:8083                                              
+        //                     docker run -d --name pet1 -p 8081:8080 54.145.108.140:8083/petshop:${VERSION}
+        //                 '''
+        //             }  
+        //         }
+        //     }                     
+        // }  
         
-        // stage('Install Docker') {
-        //     steps {
-        //         dir('Ansible'){
-        //           script {
-        //                  ansiblePlaybook credentialsId: 'ssh', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/', playbook: 'playbook.yaml'
-        //                 }     
-        //            }    
-        //       }
-        // }
-
+        stage('Ansible deploy') {
+            steps {
+                dir('Ansible'){
+                  script {
+                         ansiblePlaybook credentialsId: 'ssh', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/', playbook: 'playbook.yaml'
+                        }     
+                   }    
+              }
+        }
    }
 }

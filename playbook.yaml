@@ -1,5 +1,5 @@
 - name: Deploy Docker Image from Nexus to EC2
-  hosts: 54.211.44.198
+  hosts: 34.227.81.230
   become: yes
   become_user: root
 
