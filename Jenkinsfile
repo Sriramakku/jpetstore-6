@@ -3,6 +3,7 @@ pipeline{
     stages{
         stage("sonar quality check"){   
             agent {
+                label 'node01'
                 docker {
                     image 'maven'
                     args '-u root'
