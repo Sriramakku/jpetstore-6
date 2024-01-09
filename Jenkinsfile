@@ -69,8 +69,10 @@ pipeline{
         }
         stage("docker run"){                      
             steps{                
-                script{   
-                    sh 'docker pull 54.162.126.124:8083/petshop:31 '                 
+                script{
+                    withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) { 
+                    echo "Account01@" | docker login -u admin --password-stdin 54.162.126.124:8083  
+                    sh 'docker pull 54.162.126.124:8083/petshop:31'                 
                     sh 'docker run -d --name pet1 -p 8081:8080 petshop:31'    
                 }
             }                     
