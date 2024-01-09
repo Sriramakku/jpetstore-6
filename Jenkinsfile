@@ -59,7 +59,7 @@ pipeline{
                 }                     
             }  
         } 
-        stage('Terraform EC2 provision ') {
+        stage('Terraform EC2 provision') {
             steps {
                 sh 'terraform init'
                 sh 'terraform plan -out tfplan'
