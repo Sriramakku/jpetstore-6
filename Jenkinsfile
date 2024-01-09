@@ -67,5 +67,23 @@ pipeline{
                 sh 'terraform apply -input=false tfplan'
             }
         }
+        stage("docker run"){                      
+            steps{                
+                script{                    
+                        sh 'docker run -d --name pet1 -p 8081:8080 54.162.126.124:8083/petshop:latest'    
+                    }
+                }                     
+            }  
+        } 
+        // stage('Install Docker') {
+        //     steps {
+        //         dir('Ansible'){
+        //           script {
+        //                  ansiblePlaybook credentialsId: 'ssh', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/', playbook: 'playbook.yaml'
+        //                 }     
+        //            }    
+        //       }
+        // }
+
    }
 }

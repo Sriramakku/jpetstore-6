@@ -1,0 +1,8 @@
+- name: Deploy Docker Image from Nexus to EC2
+  hosts: 54.211.44.198
+  become: yes
+  become_user: root
+
+  tasks:
+  - name: Run container
+    command: docker run -d --name pet1 -p 8080:8080 54.162.126.124:8083/petshop:latest
