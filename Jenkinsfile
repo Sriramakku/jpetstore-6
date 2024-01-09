@@ -1,5 +1,9 @@
 pipeline{
     agent { label 'node01' }
+    tools {
+        maven 'maven3'
+    }
+
     stages{
         stage("sonar quality check"){   
             agent {
