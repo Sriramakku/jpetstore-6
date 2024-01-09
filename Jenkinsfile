@@ -72,8 +72,7 @@ pipeline{
                 script{
                     withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) { 
                         sh '''
-                            echo "Account01@" | docker login -u admin --password-stdin 54.145.108.140:8083  
-                            // docker pull 54.145.108.140:8083/petshop:31                 
+                            echo "Account01@" | docker login -u admin --password-stdin 54.145.108.140:8083                                              
                             docker run -d --name pet1 -p 8081:8080 54.145.108.140:8083/petshop:${VERSION}
                         '''
                     }  
