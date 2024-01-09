@@ -69,8 +69,9 @@ pipeline{
         }
         stage("docker run"){                      
             steps{                
-                script{                    
-                    sh 'docker run -d --name pet1 -p 8081:8080 54.162.126.124:8083/petshop:latest'    
+                script{   
+                    sh 'docker pull 54.162.126.124:8083/petshop:31 '                 
+                    sh 'docker run -d --name pet1 -p 8081:8080 petshop:31'    
                 }
             }                     
         }  
