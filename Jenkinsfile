@@ -62,9 +62,9 @@ pipeline{
         stage('Terraform EC2 provision') {
             steps {
                 sh 'terraform init'
-                // sh 'terraform plan -out tfplan'
-                // sh 'terraform show -no-color tfplan > tfplan.txt'
-                sh 'terraform apply -auto-approve'
+                sh 'terraform plan -out tfplan'
+                sh 'terraform show -no-color tfplan > tfplan.txt'
+                sh 'terraform apply -input=false tfplan'
             }
         }
    }
