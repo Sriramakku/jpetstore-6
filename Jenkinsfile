@@ -67,7 +67,7 @@ pipeline{
                 sh 'terraform apply -input=false tfplan'
             }
         }
-        stage("docker run"){                      
+        stage("docker run "){                      
             steps{                
                 script{
                     withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) { 
