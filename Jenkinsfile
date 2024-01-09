@@ -45,11 +45,11 @@ pipeline{
                 script{
                     withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) {
                         sh '''
-                            docker build -t 54.81.72.120:8083/petshop:${VERSION} .
-                            echo "Account01@" | docker login -u admin --password-stdin 54.81.72.120:8083
-                            #docker login -u admin -p $nexus_creds 54.81.72.120:8083
-                            docker push 54.81.72.120:8083/petshop:${VERSION}
-                            docker rmi 54.81.72.120:8083/petshop:${VERSION}
+                            docker build -t 54.81.72.120:8082/petshop:${VERSION} .
+                            echo "Account01@" | docker login -u admin --password-stdin 54.81.72.120:8082
+                            #docker login -u admin -p $nexus_creds 54.81.72.120:8082
+                            docker push 54.81.72.120:8082/petshop:${VERSION}
+                            docker rmi 54.81.72.120:8082/petshop:${VERSION}
                         '''
                     }
                 }                     
