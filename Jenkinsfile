@@ -1,5 +1,5 @@
 pipeline{
-    agent { label 'node01' }
+    agent { label 'mode01' }
     environment {
         // SCANNER_HOME=tool 'sonar-scanner'
         VERSION = "${env.BUILD_ID}"
