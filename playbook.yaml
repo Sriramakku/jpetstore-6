@@ -1,8 +1,10 @@
-- name: Deploy Docker Image from Nexus to EC2
-  hosts: 34.227.81.230
+- name: Installing apache
+  hosts: 3.87.138.112
   become: yes
   become_user: root
 
   tasks:
-  - name: Run container
-    command: docker run -d --name pet1 -p 8080:8080 54.162.126.124:8083/petshop:latest
+  - name: "Installing httpd"
+    package:
+      name: httpd
+      state: present

@@ -80,14 +80,14 @@ pipeline{
         //     }                     
         // }  
         
-        // stage('Ansible deploy') {
-        //     steps {
-        //         dir('Ansible'){
-        //           script {
-        //                  ansiblePlaybook credentialsId: 'ssh', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/', playbook: 'playbook.yaml'
-        //                 }     
-        //            }    
-        //       }
-        // }
+        stage('Ansible deploy') {
+            steps {
+                dir('Ansible'){
+                  script {
+                         ansiblePlaybook credentialsId: 'ssh', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/', playbook: 'playbook.yaml'
+                        }     
+                   }    
+              }
+        }
    }
 }
