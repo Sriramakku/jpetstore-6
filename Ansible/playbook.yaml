@@ -14,3 +14,16 @@
       name: apache2
       state: started
       enabled: yes
+
+  - name: Pull Docker image
+      docker_image:
+        name: 54.80.180.131:8083/petshop:63
+        source: pull
+
+  - name: Run Docker container
+    docker_container:
+      name: pet1
+      image: 54.80.180.131:8083/petshop:63
+      state: started
+      ports:
+        - "8082:8080"
