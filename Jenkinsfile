@@ -12,53 +12,53 @@ pipeline{
         maven 'maven3'
     }
     stages{
-        // stage ('maven compile') {
-        //     steps {
-        //         sh 'mvn clean compile'
-        //     }
-        // }
-        // stage ('maven Test') {
-        //     steps {
-        //         sh 'mvn test'
-        //     }
-        // }
-        // // stage("Sonarqube Analysis "){
-        // //     steps{
-        // //         withSonarQubeEnv('sonar-server') {
-        // //             sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Petshop \
-	    // //             -Dsonar.exclusions=**/Dockerfile \
-        // //             -Dsonar.java.binaries=. \
-        // //             -Dsonar.projectKey=Petshop '''
-        // //         }
-        // //     }
-        // // }
-        // // stage("quality gate"){
-        // //     steps {
-        // //         script {
-        // //           waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token' 
-        // //         }
-        // //    }
-        // // }
-        // stage ('Build war file'){
+        stage ('maven compile') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+        stage ('maven Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        // stage("Sonarqube Analysis "){
         //     steps{
-        //         sh 'mvn clean install -DskipTests=true'
+        //         withSonarQubeEnv('sonar-server') {
+        //             sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Petshop \
+	    //             -Dsonar.exclusions=**/Dockerfile \
+        //             -Dsonar.java.binaries=. \
+        //             -Dsonar.projectKey=Petshop '''
+        //         }
         //     }
         // }
-        // stage("docker build and push to Nexus repo"){                      
-        //     steps{                
-        //         script{
-        //             withCredentials([string(credentialsId: 'nexus_password', variable: 'nexus_creds')]) {
-        //                 sh '''
-        //                     docker build -t 54.89.239.176:8083/petshop:${VERSION} .
-        //                     echo "Account01@" | docker login -u admin --password-stdin 54.89.239.176:8083
-        //                     #docker login -u admin -p $nexus_creds 54.89.239.176:8083
-        //                     docker push 54.89.239.176:8083/petshop:${VERSION}
-        //                     docker rmi 54.89.239.176:8083/petshop:${VERSION}
-        //                 '''
-        //             }
-        //         }                     
-        //     }  
-        // } 
+        // stage("quality gate"){
+        //     steps {
+        //         script {
+        //           waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token' 
+        //         }
+        //    }
+        // }
+        stage ('Build war file'){
+            steps{
+                sh 'mvn clean install -DskipTests=true'
+            }
+        }
+        stage("docker build and push to Nexus repo"){                      
+            steps{                
+                script{
+                    withCredentials([string(credentialsId: 'nexus_password', variable: 'nexus_creds')]) {
+                        sh '''
+                            docker build -t 54.89.239.176:8083/petshop:${VERSION} .
+                            echo "Account01@" | docker login -u admin --password-stdin 54.89.239.176:8083
+                            #docker login -u admin -p $nexus_creds 54.89.239.176:8083
+                            docker push 54.89.239.176:8083/petshop:${VERSION}
+                            docker rmi 54.89.239.176:8083/petshop:${VERSION}
+                        '''
+                    }
+                }                     
+            }  
+        } 
         stage('Terraform EC2 provision') {
             steps {
                 sh 'terraform init'
@@ -77,19 +77,7 @@ pipeline{
                         }     
                    }    
               }
-        }
-        // stage("docker run "){                      
-        //     steps{                
-        //         script{
-        //             withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) { 
-        //                 sh '''
-        //                     echo "Account01@" | docker login -u admin --password-stdin 54.89.239.176:8083                                              
-        //                     docker -H ssh://ubuntu@3.87.138.112 run -d --name pet1 -p 8081:8080 54.89.239.176:8083/petshop:${VERSION}
-        //                 '''
-        //             }  
-        //         }
-        //     }                     
-        // }  
+        }        
    }
    post {
 		always {
