@@ -5,7 +5,7 @@
 
   tasks:
   - name: "Installing httpd"
-    package:
+    apt:
       name: apache2
         state: present
 
