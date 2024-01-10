@@ -7,7 +7,7 @@
   - name: "Installing httpd"
     apt:
       name: apache2
-        state: present
+      state: present
 
   - name: Start and enable apache2 service
     service:
