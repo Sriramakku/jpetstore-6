@@ -3,16 +3,6 @@
   become: yes
   become_user: root
 
-  vars:
-    nexus_username: admin
-    nexus_password: Account01@
-    nexus_repository_url: 54.89.239.176:8083
-    docker_image_name: petshop:69
-    container_name: pet1
-    host_port: 8081
-    container_port: 8080
-
-
   tasks:
   - name: "Installing httpd"
     apt:
@@ -25,46 +15,17 @@
       state: started
       enabled: yes
 
-  - name: Log in to Nexus Repository Manager
-    uri:
-      url: "{{ nexus_repository_url }}/v2/"
-      method: GET
-      status_code: 401
-      user: "{{ nexus_username }}"
-      password: "{{ nexus_password }}"
-      force_basic_auth: yes
-      validate_certs: no
-    register: nexus_login_result
-    ignore_errors: yes
-
-  - name: Authenticate with Nexus
-    uri:
-      url: "{{ nexus_repository_url }}/v1/users"
-      method: GET
-      status_code: 200
-      user: "{{ nexus_username }}"
-      password: "{{ nexus_password }}"
-      force_basic_auth: yes
-      validate_certs: no
-    when: nexus_login_result.status == 401
-
-  - name: Pull Docker image from Nexus
+  - name: Pull Docker image
     docker_image:
-      name: "{{ nexus_repository_url }}/{{ docker_image_name }}"
+      name: 54.89.239.176:8083/petshop:68
       source: pull
-      force_source: yes
-      force_tag: yes
-      registry_auth:
-        username: "{{ nexus_username }}"
-        password: "{{ nexus_password }}"
-        server_address: "{{ nexus_repository_url }}"
-    retries: 3
-    delay: 10
 
   - name: Run Docker container
     docker_container:
-      name: "{{ container_name }}"
-      image: "{{ nexus_repository_url }}/{{ docker_image_name }}"
+      name: pet1
+      image: 54.89.239.176:8083/petshop:68
       state: started
       ports:
-      - "{{ host_port }}:{{ container_port }}"
+      - "8082:8080"
+
+
