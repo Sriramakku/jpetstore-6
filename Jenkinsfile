@@ -49,11 +49,11 @@ pipeline{
                 script{
                     withCredentials([string(credentialsId: 'nexus_password', variable: 'nexus_creds')]) {
                         sh '''
-                            docker build -t 54.80.180.131:8083/petshop:${VERSION} .
-                            echo "Account01@" | docker login -u admin --password-stdin 54.80.180.131:8083
-                            #docker login -u admin -p $nexus_creds 54.80.180.131:8083
-                            docker push 54.80.180.131:8083/petshop:${VERSION}
-                            docker rmi 54.80.180.131:8083/petshop:${VERSION}
+                            docker build -t 54.89.239.176:8083/petshop:${VERSION} .
+                            echo "Account01@" | docker login -u admin --password-stdin 54.89.239.176:8083
+                            #docker login -u admin -p $nexus_creds 54.89.239.176:8083
+                            docker push 54.89.239.176:8083/petshop:${VERSION}
+                            docker rmi 54.89.239.176:8083/petshop:${VERSION}
                         '''
                     }
                 }                     
@@ -83,8 +83,8 @@ pipeline{
                 script{
                     withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) { 
                         sh '''
-                            echo "Account01@" | docker login -u admin --password-stdin 54.80.180.131:8083                                              
-                            docker -H ssh://ubuntu@3.87.138.112 run -d --name pet1 -p 8081:8080 54.80.180.131:8083/petshop:${VERSION}
+                            echo "Account01@" | docker login -u admin --password-stdin 54.89.239.176:8083                                              
+                            docker -H ssh://ubuntu@3.87.138.112 run -d --name pet1 -p 8081:8080 54.89.239.176:8083/petshop:${VERSION}
                         '''
                     }  
                 }

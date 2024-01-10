@@ -17,13 +17,13 @@
 
   - name: Pull Docker image
     docker_image:
-      name: 54.80.180.131:8083/petshop:63
+      name: 54.89.239.176:8083/petshop:latest
       source: pull
 
   - name: Run Docker container
     docker_container:
       name: pet1
-      image: 54.80.180.131:8083/petshop:63
+      image: 54.89.239.176:8083/petshop:latest
       state: started
       ports:
       - "8082:8080"
