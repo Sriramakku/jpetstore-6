@@ -6,5 +6,11 @@
   tasks:
   - name: "Installing httpd"
     package:
-      name: httpd
-      state: present
+      name: apache2
+        state: present
+
+  - name: Start and enable apache2 service
+    service:
+      name: apache2
+      state: started
+      enabled: yes
